@@ -33,5 +33,5 @@ jobs:
     - name: Download JAR
       uses: actions/upload-artifact@v4.6.2
       with:
-        name: devops-0.0.1-SNAPSHOT.jar
-        path: target
+        name: jarToDownload
+        path: target/*.jar
