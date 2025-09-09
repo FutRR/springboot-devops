@@ -96,5 +96,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: FutRR/springboot-devops:latest
+        tags: futrr/springboot-devops:latest
       
