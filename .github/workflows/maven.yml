@@ -42,7 +42,7 @@ jobs:
     - name: Execute test and code quality
       env:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
-      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:check --file pom.xml -Dsonar.projectKey=romainsessa_m2i-api-2025
+      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:check --file pom.xml -Dsonar.projectKey=futrr_devops
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
       with:
