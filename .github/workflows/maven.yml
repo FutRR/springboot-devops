@@ -79,6 +79,7 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
+        tags: ${{ DOCKERHUB_USERNAME }}
       
         
   build:
