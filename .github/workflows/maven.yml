@@ -79,7 +79,7 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ${{ DOCKERHUB_USERNAME }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}
       
         
   build:
