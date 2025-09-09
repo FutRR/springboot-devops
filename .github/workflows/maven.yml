@@ -27,8 +27,22 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn test jacoco:check --file pom.xml
+    - name: Cache SonarQube packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+    - name: Execute test and code quality
+      env:
+       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:check --file pom.xml -Dsonar.projectKey=romainsessa_m2i-api-2025
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
       with:
@@ -54,11 +68,6 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Cache SonarQube packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
     - name: Build with Maven
       run: mvn -B package -DskipTests --file pom.xml
     - name: Download JAR
@@ -67,7 +76,6 @@ jobs:
         name: jarToDownload
         path: target/*.jar
     - name: Build and analyze
-      env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=FutRR_springboot-devops
 
